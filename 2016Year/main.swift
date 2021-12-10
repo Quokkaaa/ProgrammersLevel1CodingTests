@@ -20,46 +20,44 @@ a    b    result
 5    24    "TUE"
 """
 
-func solution(_ a:Int, _ b:Int) -> String {
-    guard (1 <= a && a <= 12), (1 <= b && b <= 31) else {
+func solution(_ month:Int, _ day:Int) -> String {
+    guard (1 <= month && month <= 12), (1 <= day && day <= 31) else {
         return "월은 1~12이내로, 일은 1~31이내로 입력해주세요. 단, 2월은 29일까지입니다."
     }
     let yearDividedByMonth = [31,29,31,30,31,30,31,31,30,31,30,31]
-    let dayOfTheWeekCounter = ["THU","FRI","SAT","SUN","MON","TUE","WED"]
+    let dayOfTheWeek = ["THU","FRI","SAT","SUN","MON","TUE","WED"]
     var sumDays = 0
-    // 5월 24일 = 총 데이수가 176인 경우
-    // 방법1 - 1월부터 날짜를 계산한 176일을 2016년도가 1월 1일이 금요일로 시작하니 금~목 까지의 배열 수로 카운트해서 값을 추출한다.
     
-    //방법2
-    // 1. 총합 Day수가 7미만 인 경우의 로직
-    // 1-2, 0=목요일, 1=금, 2=토, 3=일, 4=월, 5=화, 6=수 로 한정해서 요일을 추출한다.
-    if a == 1, (1 <= b && b < 7) {
-        sumDays += b
+    // 방법
+    // 1. 1월 7일미만 인 경우의 로직(7로 나눌수 없음)
+    if month == 1, (1 <= day && day < 7) {
+        sumDays += day
     } else {
         // 2. 총합 Day수가 7이상 인 경우의 로직
         // 2-1, yearDividedByMonth[0~4]의 수를 더한다.
-        sumDays += b
-        for i in 0...a-2 {
+        sumDays += day
+        for i in 0...month-2 {
             sumDays += yearDividedByMonth[i]
         }
     }
-    // 2-2, 176을 7로 나눈다
+    // 2-2, sumDays를 7로 나눈다
     // 2-3, 나머지에 따라 요일을 값을 할당한다.
+    // 나머지가 0=목, 1=금, 2=토, 3=일, 4=월, 5=화, 6=수,
     switch sumDays % 7 {
     case 0:
-        return dayOfTheWeekCounter[0]
+        return dayOfTheWeek[0]
     case 1:
-        return dayOfTheWeekCounter[1]
+        return dayOfTheWeek[1]
     case 2:
-        return dayOfTheWeekCounter[2]
+        return dayOfTheWeek[2]
     case 3:
-        return dayOfTheWeekCounter[3]
+        return dayOfTheWeek[3]
     case 4:
-        return dayOfTheWeekCounter[4]
+        return dayOfTheWeek[4]
     case 5:
-        return dayOfTheWeekCounter[5]
+        return dayOfTheWeek[5]
     case 6:
-        return dayOfTheWeekCounter[6]
+        return dayOfTheWeek[6]
     default:
         return "오류"
     }
