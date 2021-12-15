@@ -1,14 +1,4 @@
-//
-//  main.swift
-//  changeEnglishWords
-//
-//  Created by LIMGAUI on 2021/12/15.
-//
-
-import Foundation
-
-"""
-네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.
+# 네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.
 
 다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다.
 
@@ -73,55 +63,11 @@ s에는 영단어로 바뀐 부분이 없습니다.
 7    seven
 8    eight
 9    nine
-"""
-
-func solution(_ s: String) -> Int {
-    let stringNumbersDictionary: [String: Int] = ["zero":0,"one":1,"two":2,"three":3,
-                                                  "four":4,"five":5,"six":6,"seven":7,"eight":8,"nine":9]
-    // 문자요소들을 저장하는 stringNumber와 완성된 단어의 숫자를 저장해주는 stringNumbersArray
-    var stringNumber = ""
-    var stringNumbersArray: [String] = []
-    // s의 문자열을 characters에 할당
-    let characters = s.compactMap { character in String(character) }
-    
-    for i in 0..<characters.count {
-        //characters의 요소가 숫자일 경우에 값 저장
-        if let number = Int(characters[i]) {
-            stringNumbersArray.append(String(number))
-        } else {
-        //stringNumbersDictionary 여기에 대응 되는게 없으면 누적
-            stringNumber += characters[i]
-        }
-        //stringNumbersDictionary 여기에 대응되는 값이 있으면 변경 == replace
-        if let stringValue = stringNumbersDictionary[stringNumber] {
-            stringNumbersArray.append(String(stringValue))
-            stringNumber = ""
-        }
-    }
-    // stringNumbersArray의 문자열타입인 숫자들을 stringNumber에 누적
-    stringNumbersArray.forEach({ number in stringNumber += number })
-    // Int로 형변환하여 값을 return
-    guard let result = Int(stringNumber) else { return 0 }
-    
-    return result
-}
-
-let testStringNumber = "one4seveneight"
-print(solution(testStringNumber))//1478
-
-let testStringNumber2 = "23four5six7"
-print(solution(testStringNumber2))//234567
-
-let testStringNumber3 = "2three45sixseven"
-print(solution(testStringNumber3))//234567
-
-let testStringNumber4 = "123"
-print(solution(testStringNumber4))//123
 
 
-// MARK: 로직 설명 및 발생한 문제들
+# 로직 구현 및 발생한 문제
 
-"""
+
 1. 문자열을 문자하나하나를 배열로 분리 -> 문자열과 숫자를 분리하기 위한 초기작업
 2. 숫자가 나오기전까지 하나하나의 문자를 더하면 단어가 완성됨 ex) [o, n, e, 1] -> [one, 1]
 
@@ -138,4 +84,4 @@ C. 어려웠던점)
   숫자가 형변환이 되면 숫자를 추가로 배열에 저장하는 조건을 넣었고 그냥 마지막 else 에는 알파벳문자값을 넣는 로직을 구현했다.
   이 상태에서 출력을했을때 발생하는 문제가 단어를 저장하기전에 계산을해버린다는 점이다.
   문자 e를 누적해야하는데 seven을 숫자로 바꿔버리니 e는 증발해버리는 로직이었다. 그래서 순서를 변경해주었다.
-"""
+
